@@ -1,4 +1,4 @@
-﻿# As of February 2025 we require CMake 3.22.0
+# As of February 2025 we require CMake 3.22.0
 cmake_minimum_required(VERSION 3.22.0 FATAL_ERROR)
 
 
@@ -80,9 +80,9 @@ set(PACKAGE_STRING "${PROJECT_NAME} ${PACKAGE_VERSION}")
 # include local modules
 include(CheckCXXCompilerFlag)
 include(AddFileDependencies)
-include(cMake/AuraCADMacros.cmake)
+include(cMake/FreeCADMacros.cmake)
 # include helper functions/macros
-add_subdirectory(cMake/AuraCAD_Helpers)
+add_subdirectory(cMake/FreeCAD_Helpers)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cMake")
 
@@ -124,7 +124,7 @@ if(NOT AuraCAD_LIBPACK_USE OR AuraCAD_LIBPACK_CHECKFILE_CLBUNDLER OR AuraCAD_LIB
     SetupEigen()
     # This file is included directly due to some cMake macros that are defined within.
     # If these macro definitions are embedded within another macro, it causes problems.
-    include(cMake/AuraCAD_Helpers/SetupQt.cmake)
+    include(cMake/FreeCAD_Helpers/SetupQt.cmake)
     SetupFreetype()
 
     if(BUILD_GUI)
