@@ -25,19 +25,26 @@ jobs:
       with:
         context: .
         push: false
-        tags: auracad:latest
+        tags: raylyrix/auracad:latest
         load: true
-    
-    - name: Run container test
-      run: |
-        docker run --rm auracad:latest 2>&1 || echo "Container test complete"
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
     
     - name: Test Docker run
       run: |
-        docker run --rm auracad:latest echo "AuraCAD Docker working!"
+        docker run --rm raylyrix/auracad:latest
     
-    - name: Upload Docker image as artifact
+    - name: Inspect image
+      run: |
+        docker inspect raylyrix/auracad:latest
+    
+    - name: Save image to tar
+      run: |
+        docker save -o auracad-image.tar raylyrix/auracad:latest
+    
+    - name: Upload image as artifact
       uses: actions/upload-artifact@v4
       with:
-        name: AuraCAD-Docker
-        path: /var/lib/docker/...
+        name: AuraCAD-Docker-Image
+        path: auracad-image.tar
+        retention-days: 7
