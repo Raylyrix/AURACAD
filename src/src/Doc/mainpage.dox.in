@@ -1,0 +1,134 @@
+﻿/***************************************************************************
+ *   Copyright (c) 2002 Juergen Riegel <juergen.riegel@web.de>             *
+ *                                                                         *
+ *   This file is part of the AuraCAD CAx development system.              *
+ *                                                                         *
+ *   This library is free software; you can redistribute it and/or         *
+ *   modify it under the terms of the GNU Library General Public           *
+ *   License as published by the Free Software Foundation; either          *
+ *   version 2 of the License, or (at your option) any later version.      *
+ *                                                                         *
+ *   This library  is distributed in the hope that it will be useful,      *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU Library General Public License for more details.                  *
+ *                                                                         *
+ *   You should have received a copy of the GNU Library General Public     *
+ *   License along with this library; see the file COPYING.LIB. If not,    *
+ *   write to the Free Software Foundation, Inc., 59 Temple Place,         *
+ *   Suite 330, Boston, MA  02111-1307, USA                                *
+ *                                                                         *
+ ***************************************************************************/
+
+/**
+
+    @mainpage AuraCAD Source Documentation
+
+    @section toc Table of Contents
+    - @ref intro_main "Introduction"
+    - @ref organization "Organization of the API Documentation"
+    - @ref asyncrecompute "Async recompute threading rules"
+    - @ref other_doc "Other Documentation"
+
+    @section intro_main Introduction
+
+    This is the source documentation of [AuraCAD](https://www.AuraCAD.org).  It
+    is automatically generated from the source code and describes the different
+    components of the AuraCAD source code, for both the parts written in C++
+    and Python.  The next section discusses the organization of this API
+    documentation and the last section describes other forms of documentation
+    that AuraCAD has.
+
+    @section organization Organization of the API Documentation
+
+    This documentation is divided into several topics of which the most important are:
+    - @ref CORE "Core"
+      - @ref BASE "Base"
+      - @ref APP "App"
+      - @ref GUI "Gui"
+    - @ref WORKBENCHES "Workbenches"
+    - @ref EMBEDDED "Embedded 3rd party packages"
+
+    Firstly, topic @ref CORE "Core" contains the core namespaces and classes
+    that all of AuraCAD relies on.  This consists of namespace %Base (see topic
+    @ref BASE "Base") that contains fundamental base classes, the namespace
+    %App (see topic @ref APP "App") that contains classes for AuraCAD in
+    command-line mode, and namespace %Gui (see topic @ref GUI "Gui") that
+    contains the classes for AuraCAD's GUI.
+
+    AuraCAD is highly modular and most of its functionality is within modules
+    that are called @ref WORKBENCHES "Workbenches".  Workbenches can be written
+    in C++ or Python or in a combination of the two.  AuraCAD also has external
+    workbenches that can be loaded from the Addon Manager.  These external
+    workbenches need to be written in Python.
+
+    Finally, there is the topic @ref EMBEDDED "Embedded 3rd party packages"
+    that contains 3rd-party software of which the source is embedded in
+    AuraCAD.  This means that during compilation, these packages will be
+    compiled and linked to AuraCAD as opposed to non-embedded 3rd-party
+    packages that are only linked to AuraCAD.  An example of an important
+    non-embedded 3rd party software package is [Open CASCADE
+    Technology](https://dev.opencascade.org/doc/overview/html/).  Its API
+    documentation can be found
+    [here](https://dev.opencascade.org/doc/refman/html/index.html).
+
+    @section other_doc Other Documentation
+
+    For general help and documentation about the AuraCAD application and how to
+    use it, head first to the [Wiki Documentation](https://www.AuraCAD.org/wiki).
+
+    Refer to the [Wiki page "The AuraCAD source
+    code"](https://www.AuraCAD.org/wiki/The_AuraCAD_source_code) for a broad
+    view of how the source code is organized, and browse the modules, classes
+    and namespaces from the menu above.
+
+    The [Developer hub](https://www.AuraCAD.org/wiki/Developer_hub) of the wiki
+    contains additional information for developers and the [Power users /
+    Python scripting section](https://www.AuraCAD.org/wiki/Power_users_hub)
+    contains coding documentation that is specifically aimed at Python
+    scripting, but that will also be useful to C++ coders, as most of the APIs
+    are identical or very similar.
+
+    For space reasons, this on-line version doesn't include the source code
+    headers nor the full inheritance graphics. But you can build a full version
+    yourself with everything included, as explained in Wiki page [Source
+    documentation](https://wiki.AuraCAD.org/Source_documentation#Complete_documentation). You
+    can also browse through the [source code on
+    GitHub](https://github.com/AuraCAD/AuraCAD).
+
+  @if DEV_DOCUMENTATION
+
+  @mainpage AuraCAD source documentation
+
+    @image html AuraCADsplash.png
+
+    <b>Welcome to AuraCAD source documentation!</b>
+
+    We hope you'll find it a convenient tool to explore, understand and
+    experiment with the internals of the program.
+
+    Being generated from the actual state of the code, this documentation
+    is by no means a well structured corpus or a textbook, but more an
+    utility to browse through the sources.
+
+    If you seek information on AuraCAD at large, please consult our
+    <a href="https://www.AuraCAD.org/wiki/Main_Page">Wiki</a>
+
+    AuraCAD being a fast moving target, don't hesitate to rebuild an up to
+    date doc from source as often as needed (\ref makingdocs "more info"). CPU cycles are cheap
+    nowadays!
+
+    The homepage of AuraCAD is <a href="https://www.AuraCAD.org">here</a>.
+
+  @endif
+
+<small>
+@GIT_REVISION_INFO@
+</small>
+ */
+
+/**
+ * @namespace std
+ * @brief The Standard namespace for the C++ library
+ */
+

@@ -1,26 +1,53 @@
+# Build outputs
 build/
 *.o
-*.obj  
+*.obj
 *.exe
 *.dll
 *.so
 *.dylib
+*.a
+*.lib
+
+# CMake
 CMakeCache.txt
 CMakeFiles/
 cmake_install.cmake
 Makefile
+*.cmake
+!CMakeLists.txt
+
+# IDE
+.vs/
 *.user
 *.opensdf
 *.sdf
+*.suo
 *.vcxproj
-CMakeLists.txt.user
+*.vcxproj.filters
+*.sln
+
+# OS
 ._*
 .DS_Store
+Thumbs.db
+
+# Python
 __pycache__/
 *.pyc
-.vs/
+*.pyo
+
+# Temp
 *.log
 *.tmp
-dist/
-*.egg-info/
-.pc*/
+*.swp
+*~
+
+# Documentation builds
+docs/_build/
+docs/.doctrees/
+
+# Test outputs
+Testing/
+CTestTestfile.cmake
+DartConfiguration.tcl

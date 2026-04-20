@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<package format="1" xmlns="https://wiki.AuraCAD.org/Package_Metadata">
+  <name>Test Workbench</name>
+  <description>A package.xml file for unit testing.</description>
+  <version>1.0.1</version>
+  <date>2022-01-07</date>
+  <maintainer email="developer1@AuraCAD.org">AuraCAD Developer 1</maintainer>
+  <maintainer email="developer2@AuraCAD.org">AuraCAD Developer 2</maintainer>
+  <author email="developer3@AuraCAD.org">AuraCAD Developer 3</author>
+  <author>AuraCAD Developer 4</author>
+  <author>AuraCAD Developer 5</author>
+  <license file="LICENSE">LGPLv2.1</license>
+  <url type="repository" branch="main">https://github.com/chennes/AuraCAD-Package</url>
+  <url type="readme">https://github.com/chennes/AuraCAD-Package/blob/main/README.md</url>
+  <url type="documentation">https://github.com/chennes/AuraCAD-Package/blob/main/README.md</url>
+  <url type="bugtracker">https://github.com/chennes/AuraCAD-Package/issues</url>
+  <icon>Resources/icons/PackageIcon.svg</icon>
+  <tag>Tag0</tag>
+  <tag>Tag1</tag>
+
+	<content>
+		<workbench>
+			<classname>TestWorkbenchA</classname>
+			<AuraCADmin>0.20</AuraCADmin>
+			<tag>Tag A</tag>
+		</workbench>
+		<workbench>
+			<classname>TestWorkbenchB</classname>
+			<AuraCADmin>0.1</AuraCADmin>
+			<AuraCADmax>0.19</AuraCADmax>
+			<tag>Tag B</tag>
+		</workbench>
+		<workbench>
+			<classname>TestWorkbenchC</classname>
+			<tag>Tag C</tag>
+			<tag>Tag D</tag>
+		</workbench>
+		<workbench>
+			<classname>TestWorkbenchD</classname>
+			<depend>DependencyA</depend>
+			<depend type="internal">InternalWorkbench</depend>
+			<depend type="addon">AddonWorkbench</depend>
+			<depend type="python">PythonPackage</depend>
+			<depend type="automatic">DependencyB</depend>
+		</workbench>
+		<macro>
+			<name>Macro A</name>
+			<file>Nonexistent File.auracadMacro</file>
+			<AuraCADmin>0.20</AuraCADmin>
+			<AuraCADmax>999.999</AuraCADmax>
+		</macro>
+		<macro>
+			<name>Macro B</name>
+			<file>Another Nonexistent File.auracadMacro</file>
+		</macro>
+		<preferencepack>
+			<name>Preference Pack A</name>
+		</preferencepack>
+		<other_content_item>
+			<name>Doesn't Really Matter</name>
+		</other_content_item>
+	</content>
+
+</package>

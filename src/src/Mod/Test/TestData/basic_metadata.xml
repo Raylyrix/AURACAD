@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<package format="1" xmlns="https://wiki.AuraCAD.org/Package_Metadata">
+  <name>Test Workbench</name>
+  <description>A package.xml file for unit testing.</description>
+  <version>1.0.1</version>
+  <date>2022-01-07</date>
+  <maintainer email="developer1@AuraCAD.org">AuraCAD Developer 1</maintainer>
+  <maintainer email="developer2@AuraCAD.org">AuraCAD Developer 2</maintainer>
+  <author email="developer3@AuraCAD.org">AuraCAD Developer 3</author>
+  <author>AuraCAD Developer 4</author>
+  <author>AuraCAD Developer 5</author>
+  <license file="LICENSE">LGPLv2.1</license>
+  <url type="repository" branch="main">https://github.com/chennes/AuraCAD-Package</url>
+  <url type="readme">https://github.com/chennes/AuraCAD-Package/blob/main/README.md</url>
+  <url type="documentation">https://github.com/chennes/AuraCAD-Package/blob/main/README.md</url>
+  <url type="bugtracker">https://github.com/chennes/AuraCAD-Package/issues</url>
+  <url type="discussion">https://forum.AuraCAD.org/</url>
+  <icon>Resources/icons/PackageIcon.svg</icon>
+  <tag>Tag0</tag>
+  <tag>Tag1</tag>
+</package>

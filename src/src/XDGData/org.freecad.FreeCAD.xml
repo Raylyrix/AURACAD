@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<mime-info xmlns='http://www.freedesktop.org/standards/shared-mime-info'>
+  <mime-type type="application/x-extension-auracadstd">
+    <!-- <sub-class-of type="application/zip"/> -->
+    <comment>AuraCAD document files</comment>
+    <glob pattern="*.auracadstd"/>
+    <generic-icon name="application-x-extension-auracadstd"/>
+  </mime-type>
+</mime-info>
