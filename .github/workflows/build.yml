@@ -49,7 +49,7 @@ jobs:
           -DBUILD_ASSEMBLY=OFF \
           -DBUILD_DRAFT=OFF \
           -DBUILD_ARCH=OFF \
-          -DBUILD_PART DESIGN=OFF \
+          -DBUILD_PART=OFF \
           -DBUILD_ROBOT=OFF \
           -DBUILD_CAM=OFF \
           -DBUILD_SHEETMETAL=OFF \
@@ -86,7 +86,7 @@ jobs:
         cd src
         mkdir build
         cd build
-        cmake .. -G "Visual Studio 17 2022" -A x64 -DBUILD_TESTING=OFF -DBUILD_DOC=OFF
+        cmake .. -G "Visual Studio 17 2022" -A x64 -DBUILD_TESTING=OFF -DBUILD_DOC=OFF -DBUILD_FEM=OFF -DBUILD_ASSEMBLY=OFF -DBUILD_DRAFT=OFF -DBUILD_ARCH=OFF -DBUILD_PART=OFF -DBUILD_ROBOT=OFF -DBUILD_CAM=OFF -DBUILD_SHEETMETAL=OFF -DBUILD_IMMEDIATEGUI=OFF -DBUILD_GUI=OFF
     
     - name: Build
       shell: pwsh
