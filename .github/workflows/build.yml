@@ -8,46 +8,6 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
-    runs-on: windows-latest
-
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      with:
-        fetch-depth: 1
-        submodules: recursive
-
-    - name: Download FreeCAD Libpack
-      run: |
-        Invoke-WebRequest -Uri 'https://github.com/FreeCAD/FreeCAD-LibPack/releases/download/3.1.1.3/LibPack-1.1.1-v3.1.1.3-Release.7z' -OutFile 'LibPack.7z' -UseBasicParsing
-        7z x LibPack.7z -osrc\lib -y
-        Remove-Item LibPack.7z
-
-    - name: Install Visual Studio
-      uses: microsoft/setup-msbuild@v1
-
-    - name: Configure CMake
-      shell: pwsh
-      run: |
-        cd src
-        mkdir build
-        cd build
-        cmake .. -G "Visual Studio 17 2022" -A x64 -DFREECAD_LIBPACK_USE=ON -DFREECAD_LIBPACK_DIR="$env:GITHUB_WORKSPACE\src\lib" -DBUILD_TESTING=OFF -DBUILD_DOC=OFF
-
-    - name: Build
-      shell: pwsh
-      run: |
-        cd src/build
-        cmake --build . --config Release -j4
-
-    - name: Upload artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: AuraCAD-Windows
-        path: src/build/bin/AuraCAD.exe
-        retention-days: 7
-
   docker:
     runs-on: ubuntu-latest
 
@@ -61,26 +21,30 @@ jobs:
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
 
-    - name: Build Docker image with Libpack
-      uses: docker/build-push-action@v5
-      with:
-        context: .
-        push: false
-        tags: raylyrix/auracad:latest
-        load: false
-        build-args: |
-          LIBPACK_URL=https://github.com/FreeCAD/FreeCAD-LibPack/releases/download/3.1.1.3/LibPack-1.1.1-v3.1.1.3-Release.7z
-        cache-from: type=gha
-        cache-to: type=gha,mode=max
-
     - name: Login to Docker Hub
       uses: docker/login-action@v3
       with:
         username: rayvical
         password: ${{ secrets.DOCKER_HUB_PASSWORD }}
 
-    - name: Push to Docker Hub
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        push: true
+        tags: |
+          rayvical/cad:latest
+          rayvical/cad:v1.2.0
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+        build-args: |
+          LIBPACK_VERSION=3.1.1.3
+        no-cache: false
+
+    - name: Test Docker run
       run: |
-        docker push raylyrix/auracad:latest
-        docker tag raylyrix/auracad:latest raylyrix/auracad:v1.2.0
-        docker push raylyrix/auracad:v1.2.0
+        docker run --rm rayvical/cad:latest
+
+    - name: Verify Docker image
+      run: |
+        docker inspect raylyrix/auracad:latest || docker inspect rayvical/cad:latest

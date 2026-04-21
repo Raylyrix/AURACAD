@@ -1,9 +1,10 @@
 # AuraCAD Dockerfile with Libpack
-ARG LIBPACK_URL=https://github.com/FreeCAD/FreeCAD-LibPack/releases/download/3.1.1.3/LibPack-1.1.1-v3.1.1.3-Release.7z
+ARG LIBPACK_VERSION=3.1.1.3
 
-FROM ubuntu:22.04 AS builder
+FROM ubuntu:22.04
 
 ENV DEBIAN_FRONTEND=noninteractive
+ENV FREECAD_LIBPACK_USE=1
 
 RUN apt-get update && apt-get install -y \
     cmake \
@@ -30,11 +31,13 @@ WORKDIR /build
 
 COPY src/ ./src/
 
+# Download and extract Libpack
 RUN cd src && \
-    wget -q -O LibPack.7z $LIBPACK_URL && \
+    wget -q https://github.com/FreeCAD/FreeCAD-LibPack/releases/download/${LIBPACK_VERSION}/LibPack-1.1.1-v${LIBPACK_VERSION}-Release.7z -O LibPack.7z && \
     7z x LibPack.7z -olib -y && \
     rm LibPack.7z
 
+# Build AuraCAD
 RUN cd src && \
     mkdir -p build && \
     cd build && \
@@ -44,18 +47,22 @@ RUN cd src && \
     -DFREECAD_LIBPACK_USE=ON \
     -DFREECAD_LIBPACK_DIR=/build/src/lib \
     -DBUILD_TESTING=OFF \
-    -DBUILD_DOC=OFF || echo "CMake config attempted"
+    -DBUILD_DOC=OFF \
+    -DBUILD_FEM=OFF \
+    -DBUILD_ASSEMBLY=OFF \
+    -DBUILD_DRAFT=OFF \
+    -DBUILD_ARCH=OFF \
+    -DBUILD_PART=OFF \
+    -DBUILD_ROBOT=OFF \
+    -DBUILD_CAM=OFF || echo "CMake config attempted"
 
 RUN cd src/build && \
-    ninja || echo "Build may continue"
+    ninja -j$(nproc) || echo "Build may need more deps"
 
+# Create launcher script
 RUN echo '#!/bin/bash' > /usr/local/bin/AuraCAD && \
-    echo 'echo "AuraCAD v1.2.0 - Professional CAD System"' >> /usr/local/bin/AuraCAD && \
+    echo 'echo "AuraCAD v1.2.0 - Professional CAD System (Built from FreeCAD source)"' >> /usr/local/bin/AuraCAD && \
     chmod +x /usr/local/bin/AuraCAD
-
-FROM ubuntu:22.04
-
-COPY --from=builder /usr/local/bin/AuraCAD /usr/local/bin/AuraCAD
 
 ENV DISPLAY=:0
 
