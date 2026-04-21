@@ -11,6 +11,7 @@ RUN apt-get update && apt-get install -y \
     ninja-build \
     g++ \
     wget \
+    curl \
     p7zip-full \
     libboost-all-dev \
     libqt5svg5 \
@@ -33,7 +34,9 @@ COPY src/ ./src/
 
 # Download and extract Libpack
 RUN cd src && \
-    wget -q https://github.com/FreeCAD/FreeCAD-LibPack/releases/download/${LIBPACK_VERSION}/LibPack-1.1.1-v${LIBPACK_VERSION}-Release.7z -O LibPack.7z && \
+    curl -L -o LibPack.7z \
+    https://github.com/FreeCAD/FreeCAD-LibPack/releases/download/${LIBPACK_VERSION}/LibPack-1.1.1-v${LIBPACK_VERSION}-Release.7z && \
+    ls -la LibPack.7z && \
     7z x LibPack.7z -olib -y && \
     rm LibPack.7z
 
