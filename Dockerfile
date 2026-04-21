@@ -32,10 +32,10 @@ WORKDIR /build
 
 COPY src/ ./src/
 
-# Download and extract Libpack
+# Download and extract Libpack - correct filename: LibPack-1.1.0-v3.1.1.3-Release.7z
 RUN cd src && \
     curl -L -o LibPack.7z \
-    https://github.com/FreeCAD/FreeCAD-LibPack/releases/download/${LIBPACK_VERSION}/LibPack-1.1.1-v${LIBPACK_VERSION}-Release.7z && \
+    https://github.com/FreeCAD/FreeCAD-LibPack/releases/download/${LIBPACK_VERSION}/LibPack-1.1.0-v${LIBPACK_VERSION}-Release.7z && \
     ls -la LibPack.7z && \
     7z x LibPack.7z -olib -y && \
     rm LibPack.7z
