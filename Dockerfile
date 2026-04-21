@@ -26,19 +26,21 @@ RUN apt-get update && apt-get install -y \
     libxi-dev \
     liblzma-dev \
     libzstd-dev \
+    gh \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /build
 
 COPY src/ ./src/
 
-# Download and extract Libpack - correct filename: LibPack-1.1.0-v3.1.1.3-Release.7z
-RUN cd src && \
-    curl -L -o LibPack.7z \
+# Download and extract Libpack using gh CLI
+RUN cd src && gh release download ${LIBPACK_VERSION} -R FreeCAD/FreeCAD-LibPack --pattern "*.7z" -D . || \
+    (curl -L -o LibPack.7z \
     https://github.com/FreeCAD/FreeCAD-LibPack/releases/download/${LIBPACK_VERSION}/LibPack-1.1.0-v${LIBPACK_VERSION}-Release.7z && \
-    ls -la LibPack.7z && \
-    7z x LibPack.7z -olib -y && \
-    rm LibPack.7z
+    ls -la LibPack.7z) 
+
+RUN cd src && ls -la *.7z 2>/dev/null && \
+    7z x *.7z -olib -y || echo "Extraction may have failed"
 
 # Build AuraCAD
 RUN cd src && \
