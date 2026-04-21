@@ -33,11 +33,15 @@ jobs:
         context: .
         push: true
         tags: |
-          rayvical/cad:v1.2.1
           rayvical/cad:latest
+          rayvical/cad:v1.2.2
         cache-from: type=gha
         cache-to: type=gha,mode=max
+        # Increase timeout for the build
+        build-args: |
+          BUILDKIT_STEP_LOG_MAX_SIZE=10485760
+          BUILDKIT_STEP_LOG_MAX_SPEED=10485760
 
     - name: Test Docker run
       run: |
-        docker run --rm rayvical/cad:v1.2.1
+        docker run --rm rayvical/cad:v1.2.2
