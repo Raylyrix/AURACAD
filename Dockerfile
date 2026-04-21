@@ -1,10 +1,8 @@
-# AuraCAD Dockerfile with Libpack
-ARG LIBPACK_VERSION=3.1.1.3
-
+# AuraCAD Dockerfile - Built on FreeCAD source with all dependencies
 FROM ubuntu:22.04
 
 ENV DEBIAN_FRONTEND=noninteractive
-ENV FREECAD_LIBPACK_USE=1
+ENV FREECAD_LIBPACK_USE=0
 
 RUN apt-get update && apt-get install -y \
     cmake \
@@ -14,6 +12,8 @@ RUN apt-get update && apt-get install -y \
     curl \
     p7zip-full \
     libboost-all-dev \
+    libqt5core5a \
+    libqt5xmlpatterns5 \
     libqt5svg5 \
     libshiboken2-dev \
     libpyside2-dev \
@@ -26,31 +26,27 @@ RUN apt-get update && apt-get install -y \
     libxi-dev \
     liblzma-dev \
     libzstd-dev \
-    gh \
+    libsqlite3-dev \
+    libxft-dev \
+    libnav-dev \
+    libspnav-dev \
+    libmedc \
+    libhdf5-dev \
+    libnetcdf-dev \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /build
 
 COPY src/ ./src/
 
-# Download and extract Libpack using gh CLI
-RUN cd src && gh release download ${LIBPACK_VERSION} -R FreeCAD/FreeCAD-LibPack --pattern "*.7z" -D . || \
-    (curl -L -o LibPack.7z \
-    https://github.com/FreeCAD/FreeCAD-LibPack/releases/download/${LIBPACK_VERSION}/LibPack-1.1.0-v${LIBPACK_VERSION}-Release.7z && \
-    ls -la LibPack.7z) 
-
-RUN cd src && ls -la *.7z 2>/dev/null && \
-    7z x *.7z -olib -y || echo "Extraction may have failed"
-
-# Build AuraCAD
+# Build AuraCAD - minimal build without GUI for faster compilation
 RUN cd src && \
     mkdir -p build && \
     cd build && \
     cmake .. \
     -G Ninja \
     -DCMAKE_BUILD_TYPE=Release \
-    -DFREECAD_LIBPACK_USE=ON \
-    -DFREECAD_LIBPACK_DIR=/build/src/lib \
+    -DFREECAD_LIBPACK_USE=OFF \
     -DBUILD_TESTING=OFF \
     -DBUILD_DOC=OFF \
     -DBUILD_FEM=OFF \
@@ -59,7 +55,10 @@ RUN cd src && \
     -DBUILD_ARCH=OFF \
     -DBUILD_PART=OFF \
     -DBUILD_ROBOT=OFF \
-    -DBUILD_CAM=OFF || echo "CMake config attempted"
+    -DBUILD_CAM=OFF \
+    -DBUILD_SHEETMETAL=OFF \
+    -DBUILD_IMMEDIATEGUI=OFF \
+    -DBUILD_GUI=OFF || echo "CMake config attempted"
 
 RUN cd src/build && \
     ninja -j$(nproc) || echo "Build may need more deps"

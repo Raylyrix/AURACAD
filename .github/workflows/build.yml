@@ -33,18 +33,11 @@ jobs:
         context: .
         push: true
         tags: |
+          rayvical/cad:v1.2.1
           rayvical/cad:latest
-          rayvical/cad:v1.2.0
         cache-from: type=gha
         cache-to: type=gha,mode=max
-        build-args: |
-          LIBPACK_VERSION=3.1.1.3
-        no-cache: false
 
     - name: Test Docker run
       run: |
-        docker run --rm rayvical/cad:latest
-
-    - name: Verify Docker image
-      run: |
-        docker inspect raylyrix/auracad:latest || docker inspect rayvical/cad:latest
+        docker run --rm rayvical/cad:v1.2.1
